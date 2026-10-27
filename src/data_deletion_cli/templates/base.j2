@@ -1,0 +1,48 @@
+{%- macro letter_body(regulation, letter_type) -%}
+{%- if regulation == "gdpr" and letter_type == "deletion" -%}
+I am writing to exercise my right to erasure ("right to be forgotten") under Article 17 of the General Data Protection Regulation (GDPR).
+
+Please delete all personal data you hold about me, including but not limited to my name, contact details, account information, browsing history, and any other data you have collected, processed, or stored.
+
+Please also inform any third parties or downstream recipients with whom you have shared my personal data that I have requested erasure of any links to, or copies or replications of, my personal data.
+
+{%- elif regulation == "ccpa" and letter_type == "deletion" -%}
+I am writing to exercise my right to deletion under the California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA).
+
+Please delete all personal information you have collected about me, including but not limited to my name, contact details, account information, identifiers, commercial information, internet activity, geolocation data, and inferences drawn from any of the foregoing.
+
+Please also direct any service providers or contractors who have received my personal information from you to delete it.
+
+{%- elif regulation == "ccpa" and letter_type == "opt-out" -%}
+I am writing to opt out of the sale and sharing of my personal information under the California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA).
+
+Please do not sell or share my personal information, and do not use or disclose it for targeted advertising or cross-context behavioral advertising. Please honor this opt-out with respect to all cookies, trackers, and similar technologies associated with me.
+
+{%- else -%}
+I am writing regarding my personal data held by your organization.
+
+Please process my request in accordance with the applicable data protection law.
+
+{%- endif -%}
+{%- endmacro -%}
+
+Date: {{ date }}
+
+{{ company }}
+Attn: Privacy / Data Protection Officer
+
+Re: {{ regulation|upper }} {{ letter_type|replace("_", " ") }} request
+
+Dear Privacy / Data Protection Officer,
+
+My name is {{ name }}. You may contact me at {{ email }}.{% if address %} My address is {{ address }}.{% endif %}
+
+{{ letter_body(regulation, letter_type) }}
+
+Please confirm in writing that you have completed this request within the timeframe required by law (30 days under the CCPA; one month under the GDPR, subject to any permitted extension).
+
+If you need additional information to verify my identity, please contact me at {{ email }}.
+
+Sincerely,
+
+{{ name }}

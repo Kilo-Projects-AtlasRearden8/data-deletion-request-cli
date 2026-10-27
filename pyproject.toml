@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data-deletion-request-cli"
+version = "0.1.0"
+description = "Draft GDPR/CCPA data-deletion and opt-out letters locally from templates, with optional LLM polishing."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [{name = "Asdale Dynamics, LLC"}]
+keywords = ["gdpr", "ccpa", "data-deletion", "opt-out", "privacy", "cli", "llm", "ollama"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "Topic :: Utilities",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

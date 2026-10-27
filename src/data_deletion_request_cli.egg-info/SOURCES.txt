@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+src/data_deletion_cli/__init__.py
+src/data_deletion_cli/cli.py
+src/data_deletion_request_cli.egg-info/PKG-INFO
+src/data_deletion_request_cli.egg-info/SOURCES.txt
+src/data_deletion_request_cli.egg-info/dependency_links.txt
+src/data_deletion_request_cli.egg-info/requires.txt
+src/data_deletion_request_cli.egg-info/top_level.txt
+tests/test_templates.py

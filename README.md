@@ -1,0 +1,126 @@
+# data-deletion-request-cli
+
+A local-first Python CLI that drafts GDPR and CCPA data-deletion and opt-out
+letters from templates. It prints the letter to stdout (or a file) and **never
+sends it automatically**. Optional LLM polishing is available through any
+OpenAI-compatible chat endpoint, defaulting to Ollama.
+
+Built and maintained by **Asdale Dynamics, LLC** — beginner-friendly AI
+education, books, guides, and practical tools.
+
+## What it does
+
+- Renders GDPR right-to-erasure (Article 17) letters.
+- Renders CCPA right-to-deletion letters.
+- Renders CCPA opt-out of sale/sharing letters.
+- Prints only — no email, no HTTP submission, no sending of any kind.
+- Optionally polishes the drafted letter with an LLM via a configurable
+  OpenAI-compatible endpoint (default Ollama at `localhost:11434`).
+- Includes tests for template rendering.
+
+## Requirements
+
+Python 3.8+. Install the package (and its small dependency set) into a virtual
+environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+The CLI needs `jinja2` and `httpx`, which are installed automatically.
+
+## Quick start
+
+Draft a GDPR deletion letter and print it:
+
+```bash
+python -m data_deletion_cli \
+  --regulation gdpr \
+  --type deletion \
+  --name "Ada Lovelace" \
+  --email "ada@example.test" \
+  --company "Example Corp"
+```
+
+Draft a CCPA opt-out letter and save it to a file:
+
+```bash
+python -m data_deletion_cli \
+  --regulation ccpa \
+  --type opt-out \
+  --name "Ada Lovelace" \
+  --email "ada@example.test" \
+  --company "Example Corp" \
+  --output ccpa_opt_out.txt
+```
+
+### Optional LLM polishing
+
+Polish with the default Ollama endpoint:
+
+```bash
+python -m data_deletion_cli \
+  --regulation gdpr \
+  --type deletion \
+  --name "Ada Lovelace" \
+  --email "ada@example.test" \
+  --company "Example Corp" \
+  --polish
+```
+
+Use a different OpenAI-compatible endpoint or model:
+
+```bash
+python -m data_deletion_cli \
+  --regulation ccpa \
+  --type deletion \
+  --name "Ada Lovelace" \
+  --email "ada@example.test" \
+  --company "Example Corp" \
+  --polish \
+  --llm-endpoint https://api.openai.com/v1/chat/completions \
+  --llm-model gpt-4o-mini
+```
+
+Polishing is best-effort: if the LLM endpoint is unreachable, the original
+draft is printed and a warning goes to stderr.
+
+### All options
+
+```
+--regulation       gdpr or ccpa (required)
+--type             deletion or opt-out (required)
+--name             Requester name (required)
+--email            Requester contact email (required)
+--address          Postal address (optional)
+--company          Organization receiving the letter (required)
+--date             Letter date YYYY-MM-DD (defaults to today)
+--polish           Enable optional LLM polishing
+--llm-endpoint     OpenAI-compatible chat endpoint URL
+--llm-model        LLM model name
+--output           Write letter to this file instead of stdout
+```
+
+`--type opt-out` is only valid with `--regulation ccpa`.
+
+## Running the tests
+
+```bash
+source .venv/bin/activate
+pip install -e ".[dev]"
+pytest
+```
+
+## Privacy & safety
+
+- No personal data is ever stored, logged, or transmitted by this tool.
+- When `--polish` is used, the drafted letter is sent to the LLM endpoint you
+  configure. Do not enable polishing with real personal data unless you trust
+  that endpoint.
+- No API keys or secrets are stored in this repository.
+
+## License
+
+MIT. Copyright (c) 2026 Asdale Dynamics, LLC. See `LICENSE`.
